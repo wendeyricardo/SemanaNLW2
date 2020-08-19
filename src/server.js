@@ -42,7 +42,7 @@ const server = express()
 const nunjucks = require('nunjucks')
 nunjucks.configure('src/views',{
     express: server,
-    noCache: true
+    noCache: true,
 })
 
 server
