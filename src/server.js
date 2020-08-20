@@ -54,11 +54,22 @@ function pageLanding(req, res) {
 
 function pageStudy(req, res) {
     const filters =req.query
-    return res.render("study.html", { proffys, filters, subjects, weekday })
+    return res.render("study.html", { proffys, filters, subjects, weekdays })
 }
 
 function pageGiveClasses(req, res) {
-    return res.render("give-classes.html")
+    const data = req.query
+
+    //se tiver data
+    const isNotEmpty = Object.keys(data).length > 0
+    if (isNotEmpty) {
+        //adicionar data a lista de proffys
+        proffys.push(data)
+
+        return res.redirect("/study")
+    }
+    //se não, não adicionar
+    return res.render("give-classes.html", {subjects, weekdays})
 }
 
 //servidor
@@ -80,5 +91,5 @@ server
 .get("/", pageLanding)
 .get("/study", pageStudy)
 .get("/give-classes", pageGiveClasses)
-//start do servidor
+//start do servidor 
 .listen(5500)
